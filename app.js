@@ -25,8 +25,8 @@ async function buildTeam() {
     console.log("======\nEnter employees to build your Org Chart\n======");
     while(addNewEmp) {
         let empType = await queryType();
-        console.log(empType);
-        addNewEmp = false;
+        
+        addNewEmp = await queryContinue();
     }
 }
 
@@ -43,6 +43,16 @@ function queryType() {
             ]
         }
     ]).then((response) => response.empType);
+}
+
+function queryContinue() {
+    return inquirer.prompt([
+        {
+            type: "confirm",
+            name: "continue",
+            message: "Would you like to add another Employee to your Org Chart?"
+        }
+    ]).then((response) => response.continue);
 }
 
 // After the user has input all employees desired, call the `render` function (required
