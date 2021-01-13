@@ -15,7 +15,7 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // const team = buildTeam();
-buildTeam();
+// buildTeam();
 
 async function buildTeam() {
 
@@ -24,13 +24,15 @@ async function buildTeam() {
 
     console.log("======\nEnter employees to build your Org Chart\n======");
     while(addNewEmp) {
-        let empType = await queryType();
-        
+        const empType = await queryEmpType();
+        const empDetails = await queryEmpDetails(empType);
+        team.push(empType);
         addNewEmp = await queryContinue();
     }
+    console.log(team);
 }
 
-function queryType() {
+function queryEmpType() {
     return inquirer.prompt([
         {
             type: "list",
@@ -43,6 +45,43 @@ function queryType() {
             ]
         }
     ]).then((response) => response.empType);
+}
+queryEmpDetails("Engineer");
+// queryEmpDetails("Intern");
+// queryEmpDetails("Manager");
+function queryEmpDetails(type) {
+    let uniqueKey;
+    switch(type) {
+        case "Engineer":
+            uniqueKey = "GitHub Profile";
+            break;
+        case "Intern":
+            uniqueKey = "School";
+            break;
+        case "Manager":
+            uniqueKey = "Office Number";
+            break;
+    }
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: `Enter new ${type}'s Name:`
+        },{
+            type: "input",
+            name: "id",
+            message: `Enter new ${type}'s Employee ID:`
+        },{
+            type: "input",
+            name: "email",
+            message: `Enter new ${type}'s Email Address:`
+        },{
+            type: "input",
+            name: "unique",
+            message: `Enter new ${type}'s ${uniqueKey}:`
+        }
+    ]).then(response => console.log(response));
 }
 
 function queryContinue() {
