@@ -14,6 +14,37 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
+// const team = buildTeam();
+buildTeam();
+
+async function buildTeam() {
+
+    let team = [];
+    let addNewEmp = true;
+
+    console.log("======\nEnter employees to build your Org Chart\n======");
+    while(addNewEmp) {
+        let empType = await queryType();
+        console.log(empType);
+        addNewEmp = false;
+    }
+}
+
+function queryType() {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "empType",
+            message: "What type of Employee would you like to add to your Org Chart?",
+            choices: [
+                "Engineer",
+                "Intern",
+                "Manager"
+            ]
+        }
+    ]).then((response) => response.empType);
+}
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
