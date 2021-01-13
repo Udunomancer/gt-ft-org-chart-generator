@@ -50,38 +50,37 @@ queryEmpDetails("Engineer");
 // queryEmpDetails("Intern");
 // queryEmpDetails("Manager");
 function queryEmpDetails(type) {
-    let uniqueKey;
-    switch(type) {
-        case "Engineer":
-            uniqueKey = "GitHub Profile";
-            break;
-        case "Intern":
-            uniqueKey = "School";
-            break;
-        case "Manager":
-            uniqueKey = "Office Number";
-            break;
-    }
 
     inquirer.prompt([
         {
             type: "input",
             name: "name",
-            message: `Enter new ${type}'s Name:`
+            message: `${type}'s Name:`
         },{
             type: "input",
             name: "id",
-            message: `Enter new ${type}'s Employee ID:`
+            message: `${type}'s Employee ID:`
         },{
             type: "input",
             name: "email",
-            message: `Enter new ${type}'s Email Address:`
+            message: `${type}'s Email Address:`
         },{
             type: "input",
             name: "unique",
-            message: `Enter new ${type}'s ${uniqueKey}:`
+            message: `${type}'s ${setUniquePrompt(type)}:`
         }
     ]).then(response => console.log(response));
+}
+
+function setUniquePrompt(type) {
+    switch(type) {
+        case "Engineer":
+            return "GitHub Profile";
+        case "Intern":
+            return "School";
+        case "Manager":
+            return "Office Number";
+    }
 }
 
 function queryContinue() {
