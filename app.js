@@ -27,12 +27,14 @@ async function buildTeam() {
     let team = [];
     let addNewEmp = true;
 
-    console.log("======\nEnter employees to build your Org Chart\n======");
+    console.log("==========\nEnter employees to build your Org Chart\n==========");
     while(addNewEmp) {
         const empType = await queryEmpType();
         const newEmp = await queryEmpDetails(empType);
         team.push(newEmp);
+        console.log("==========")
         addNewEmp = await queryContinue();
+        console.log("==========")
     }
     
     return team;
