@@ -17,7 +17,7 @@ const finalTeam = buildTeam();
 //Render html with completed team array
 const renderedHtml = finalTeam.then(result => render(result));
 //Create a new file using the rendered html
-const writeFile = renderedHtml.then(result => {
+renderedHtml.then(result => {
     fs.writeFile(outputPath, result, (err) => {
         err ? console.error(err) : console.log('Success!');
     })
@@ -33,6 +33,7 @@ async function buildTeam() {
     //Initialize while variable
     let addNewEmp = true;
 
+    //Begin by entering details for the manager
     console.log("==========\nEnter Manager details to begin Org Chart\n==========")
     const newMgr = await queryEmpDetails("Manager");
     team.push(newMgr);
