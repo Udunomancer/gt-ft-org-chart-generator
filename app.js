@@ -15,7 +15,7 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // const team = buildTeam();
-// buildTeam();
+buildTeam();
 
 async function buildTeam() {
 
@@ -25,8 +25,9 @@ async function buildTeam() {
     console.log("======\nEnter employees to build your Org Chart\n======");
     while(addNewEmp) {
         const empType = await queryEmpType();
-        const empDetails = await queryEmpDetails(empType);
-        team.push(empType);
+        const newEmp = await queryEmpDetails(empType);
+        console.log(newEmp);
+        team.push(newEmp);
         addNewEmp = await queryContinue();
     }
     console.log(team);
@@ -46,12 +47,10 @@ function queryEmpType() {
         }
     ]).then((response) => response.empType);
 }
-queryEmpDetails("Engineer");
-// queryEmpDetails("Intern");
-// queryEmpDetails("Manager");
+
 function queryEmpDetails(type) {
 
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -69,7 +68,16 @@ function queryEmpDetails(type) {
             name: "unique",
             message: `${type}'s ${setUniquePrompt(type)}:`
         }
-    ]).then(response => console.log(response));
+    ]).then(response => {
+        const {name, id, email, unique} = response;
+        if(type === "Engineer") {
+            return new Engineer(name, id, email, unique);
+        } else if(type === "Intern") {
+            return new Intern(name, id, email, unique);
+        } else {
+            return new Manager(name, id, email, unique);
+        }
+    });
 }
 
 function setUniquePrompt(type) {
