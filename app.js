@@ -14,8 +14,8 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-const team = buildTeam();
-const renderedHtml = team.then(result => render(result));
+const finalTeam = buildTeam();
+const renderedHtml = finalTeam.then(result => render(result));
 const writeFile = renderedHtml.then(result => {
     fs.writeFile(outputPath, result, (err) => {
         err ? console.error(err) : console.log('Success!');
