@@ -33,6 +33,10 @@ async function buildTeam() {
     //Initialize while variable
     let addNewEmp = true;
 
+    console.log("==========\nEnter Manager details to begin Org Chart\n==========")
+    const newMgr = await queryEmpDetails("Manager");
+    team.push(newMgr);
+
     console.log("==========\nEnter employees to build your Org Chart\n==========");
 
     //As long as the user wants to continue entering team members...
@@ -65,8 +69,7 @@ function queryEmpType() {
             message: "What type of Employee would you like to add to your Org Chart?",
             choices: [
                 "Engineer",
-                "Intern",
-                "Manager"
+                "Intern"
             ]
         }
     ]).then((response) => response.empType);
