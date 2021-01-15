@@ -96,7 +96,8 @@ function queryEmpDetails(type) {
         },{
             type: "input",
             name: "email",
-            message: `${type}'s Email Address:`
+            message: `${type}'s Email Address:`,
+            validate: validateEmail
         },{
             type: "input",
             name: "unique",
@@ -104,8 +105,12 @@ function queryEmpDetails(type) {
         }
     ]).then(response => {
         //Return specific Employee class object based on type selected in "queryEmpType()"
+        
+        //Trim the values in the object
+        Object.keys(response).forEach(key => response[key] = response[key].trim());
+
         let {name, id, email, unique} = response;
-        console.log(name);
+    
         if(type === "Engineer") {
             return new Engineer(name, id, email, unique);
         } else if(type === "Intern") {
@@ -162,6 +167,17 @@ function validateID(response) {
 
     if(input.match(idRegEx) === null) {
         return "Employee ID must be 5 numeric digits, and cannot start with zero."
+    }
+
+    return true;
+}
+
+function validateEmail(response) {
+    const emailRegEx = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@bootcamp.com$/;
+    const input = response.trim();
+
+    if(input.match(emailRegEx) === null) {
+        return "Employee email must be a work email, ex: Adress@bootcamp.com";
     }
 
     return true;
