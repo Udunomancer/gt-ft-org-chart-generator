@@ -19,7 +19,7 @@ const renderedHtml = finalTeam.then(result => render(result));
 //Create a new file using the rendered html
 renderedHtml.then(result => {
     fs.writeFile(outputPath, result, (err) => {
-        err ? console.error(err) : console.log('Success!');
+        err ? console.error(err) : console.log('Team Profiles written to output/team.html\n==========');
     })
 });
 
