@@ -86,11 +86,13 @@ function queryEmpDetails(type) {
         {
             type: "input",
             name: "name",
-            message: `${type}'s Name:`
+            message: `${type}'s Name:`,
+            validate: validateName
         },{
             type: "input",
             name: "id",
-            message: `${type}'s Employee ID:`
+            message: `${type}'s Employee ID:`,
+            validate: validateID
         },{
             type: "input",
             name: "email",
@@ -102,7 +104,8 @@ function queryEmpDetails(type) {
         }
     ]).then(response => {
         //Return specific Employee class object based on type selected in "queryEmpType()"
-        const {name, id, email, unique} = response;
+        let {name, id, email, unique} = response;
+        console.log(name);
         if(type === "Engineer") {
             return new Engineer(name, id, email, unique);
         } else if(type === "Intern") {
@@ -140,4 +143,26 @@ function queryContinue() {
             message: "Would you like to add another Employee to your Org Chart?"
         }
     ]).then((response) => response.continue);
+}
+
+function validateName(response) {
+    const nameRegEx = /^[A-Z][a-z]+\s[A-Z][a-z]+$/;
+    const input = response.trim();
+    
+    if(input.match(nameRegEx) === null) {
+        return "Employee name must be in the following format: [First Name] [Last Name].";
+    }
+
+    return true;
+}
+
+function validateID(response) {
+    const idRegEx = /^[1-9][0-9]{4}$/;
+    const input = response.trim();
+
+    if(input.match(idRegEx) === null) {
+        return "Employee ID must be 5 numeric digits, and cannot start with zero."
+    }
+
+    return true;
 }
