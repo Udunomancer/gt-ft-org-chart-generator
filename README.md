@@ -5,7 +5,7 @@
 
 Application run from the command line to automatically generate a styled html file that contains a team org chart based on user input.  Programmed in JavaScript, requires inquirer and fs packages. Uses html, css, and bootstrap to build the html file.
 
-[Example Generated ReadMe](./output/team.html)
+[Example Generated html file](./output/team.html)
 
 ## Table of Contents
 * [Installation](#installation)
